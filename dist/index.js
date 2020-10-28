@@ -74,9 +74,9 @@ const prepareFiles = (params) => ([
     // Known hosts can be string or array of strings.
     params.known_hosts ? {
         name: "known_hosts",
-        contents: Array.isArray(params.known_hosts)
+        contents: Buffer.from(Array.isArray(params.known_hosts)
             ? params.known_hosts.join(os_1.default.EOL)
-            : params.known_hosts,
+            : params.known_hosts, 'base64').toString(),
         options: {
             mode: 0o644,
             flag: "a",
