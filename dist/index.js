@@ -57,7 +57,7 @@ exports.run = run;
 const prepareFiles = (params) => ([
     params.key ? {
         name: 'default',
-        contents: params.key,
+        contents: Buffer.from(params.key, 'base64').toString(),
         options: {
             mode: 0o400,
             flag: 'ax',
@@ -65,7 +65,7 @@ const prepareFiles = (params) => ([
     } : undefined,
     ...(params.keys ? [
         // Prepare ssh keys.
-        ...params.keys.map(key => (Object.assign(Object.assign({}, key), { options: {
+        ...params.keys.map(key => (Object.assign(Object.assign({}, key), { contents: Buffer.from(key.contents, 'base64').toString(), options: {
                 mode: 0o400,
                 flag: 'ax',
             } }))),
