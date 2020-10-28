@@ -45,6 +45,7 @@ export async function run(event: Event) {
       await fs.writeFile(filepath, file.contents, file.options);
     }
   } catch (err) {
+    console.log(err)
     throw new Error(err)
   }
 }
