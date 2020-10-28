@@ -1,0 +1,28 @@
+parameters:
+  type: object
+  required:
+    - keys
+  properties:
+    keys:
+      type: array
+      items:
+        type: object
+        required:
+          - name
+          - contents
+        properties:
+          name:
+            type: string
+          contents:
+            type: string
+    known_hosts:
+      type: string
+    config:
+      type: string
+
+runs:
+  runtime: nodejs-12.x
+  image: node:12.19-stretch
+  command:
+    - node
+    - dist/index.js
