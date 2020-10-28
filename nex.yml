@@ -1,24 +1,45 @@
 parameters:
-  type: object
-  required:
+  oneOf:
+  - type: object
+    required:
+    - key
+    allOf:
+      - $ref: "#/definitions/rest"
+    properties:
+      key:
+        type: string
+  - type: object
+    required:
     - keys
-  properties:
-    keys:
-      type: array
-      items:
-        type: object
-        required:
-          - name
-          - contents
-        properties:
-          name:
-            type: string
-          contents:
-            type: string
-    known_hosts:
-      type: string
-    config:
-      type: string
+    allOf:
+      - $ref: "#/definitions/rest"
+    properties:
+      keys:
+        type: array
+        items:
+          $ref: "#/definitions/key"
+  definitions:
+    key:
+      type: object
+      required:
+      - name
+      - contents
+      properties:
+        name:
+          type: string
+        contents:
+          type: string
+    rest:
+      type: object
+      properties:
+        known_hosts:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        config:
+          type: string
 
 runs:
   runtime: nodejs-12.x

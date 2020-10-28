@@ -8,7 +8,8 @@ type Key = {
 }
 
 type Parameters = {
-  keys: Array<Key>,
+  key?: string,
+  keys?: Array<Key>,
   known_hosts?: string | Array<string>,
   config?: string,
 }
@@ -51,14 +52,24 @@ export async function run(event: Event) {
 // prepareFiles build an array of files to be stored in .ssh
 // directory.
 const prepareFiles = (params: Parameters) => <File[]>([
-  // Prepare ssh keys.
-  ...params.keys.map(key => ({
-    ...key,
+  params.key ? {
+    name: 'default',
+    contents: params.key,
     options: {
       mode: 0o400,
       flag: 'ax',
     }
-  })),
+  } : undefined,
+  ...(params.keys ? [
+    // Prepare ssh keys.
+    ...params.keys.map(key => ({
+      ...key,
+      options: {
+        mode: 0o400,
+        flag: 'ax',
+      }
+    })),
+  ] : []),
   // Prepare .ssh/known_hosts
   // Known hosts can be string or array of strings.
   params.known_hosts ? {

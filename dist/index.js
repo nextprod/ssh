@@ -55,11 +55,21 @@ exports.run = run;
 // prepareFiles build an array of files to be stored in .ssh
 // directory.
 const prepareFiles = (params) => ([
-    // Prepare ssh keys.
-    ...params.keys.map(key => (Object.assign(Object.assign({}, key), { options: {
+    params.key ? {
+        name: 'default',
+        contents: params.key,
+        options: {
             mode: 0o400,
             flag: 'ax',
-        } }))),
+        }
+    } : undefined,
+    ...(params.keys ? [
+        // Prepare ssh keys.
+        ...params.keys.map(key => (Object.assign(Object.assign({}, key), { options: {
+                mode: 0o400,
+                flag: 'ax',
+            } }))),
+    ] : []),
     // Prepare .ssh/known_hosts
     // Known hosts can be string or array of strings.
     params.known_hosts ? {
