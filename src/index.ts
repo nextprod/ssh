@@ -30,7 +30,7 @@ export async function run(event: Event) {
   if (home === undefined) {
     return new Error(`${homeEnv} is not defined`)
   }
-  const dir = path.resolve(home, "ssh")
+  const dir = path.resolve(home, ".ssh")
   try {
     if (!fs.existsSync(dir)) {
       // Create ssh directory

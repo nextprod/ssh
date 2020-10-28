@@ -31,7 +31,7 @@ function run(event) {
         if (home === undefined) {
             return new Error(`${homeEnv} is not defined`);
         }
-        const dir = path_1.default.resolve(home, "ssh");
+        const dir = path_1.default.resolve(home, ".ssh");
         try {
             if (!promise_fs_1.default.existsSync(dir)) {
                 // Create ssh directory
