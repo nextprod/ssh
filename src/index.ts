@@ -45,7 +45,6 @@ export async function run(event: Event) {
       await fs.writeFile(filepath, file.contents, file.options);
     }
   } catch (err) {
-    console.log(err)
     throw new Error(err)
   }
 }
@@ -55,7 +54,7 @@ export async function run(event: Event) {
 const prepareFiles = (params: Parameters) => <File[]>([
   params.key ? {
     name: 'default',
-    contents: params.key,
+    contents: Buffer.from(params.key, 'base64').toString(),
     options: {
       mode: 0o400,
       flag: 'ax',
@@ -65,6 +64,7 @@ const prepareFiles = (params: Parameters) => <File[]>([
     // Prepare ssh keys.
     ...params.keys.map(key => ({
       ...key,
+      contents: Buffer.from(key.contents, 'base64').toString(),
       options: {
         mode: 0o400,
         flag: 'ax',
