@@ -27,7 +27,7 @@ const os_1 = __importDefault(__webpack_require__(87));
 function run(event) {
     return __awaiter(this, void 0, void 0, function* () {
         const homeEnv = process.platform === "win32" ? "USERPROFILE" : "HOME";
-        const home = process.env.PWD;
+        const home = process.env[homeEnv];
         if (home === undefined) {
             return new Error(`${homeEnv} is not defined`);
         }
@@ -82,19 +82,6 @@ const prepareFiles = (params) => ([
         },
     } : undefined,
 ].filter(Boolean));
-run({
-    parameters: {
-        keys: [
-            { name: "a", contents: "a contents" },
-            { name: "b", contents: "b contents" }
-        ],
-        config: 'asdas',
-        known_hosts: [
-            "host1",
-            "host2"
-        ]
-    }
-});
 
 
 /***/ }),

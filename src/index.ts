@@ -81,17 +81,3 @@ const prepareFiles = (params: Parameters) => <File[]>([
     },
   } : undefined,
 ].filter(Boolean))
-
-run({
-  parameters: {
-    keys: [
-      { name: "a", contents: "a contents" },
-      { name: "b", contents: "b contents" }
-    ],
-    config: 'asdas',
-    known_hosts: [
-      "host1",
-      "host2"
-    ]
-  }
-})
